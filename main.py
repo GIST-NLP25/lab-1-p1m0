@@ -27,20 +27,24 @@ def save_data(df1, df2):
 
 def main():
     # WRITE YOUR CODE HERE
+    verbose = False
     train_df, test_df = load_data()
     # ================ OH ================ #
-    print("================= One Hot Encoding =================")
+    if verbose:
+        print("================= One Hot Encoding =================")
     train_df_oh, test_df_oh, y_dict_oh = create_train_test_df_oh(train_df, test_df)
-    best_model_oh = train_oh(train_df_oh, num_epochs=40, verbose=True)
+    best_model_oh = train_oh(train_df_oh, num_epochs=40, verbose=verbose)
     results_df_oh = predict_test_oh(best_model_oh, test_df_oh, y_dict_oh)
     # ================ Embedding ================ #
-    print("================= Embedding =================")
+    if verbose:
+        print("================= Embedding =================")
     train_df_embedding, test_df_embedding, x_dict_embedding, y_dict_embedding = create_train_test_df_embedding(train_df, test_df)
     vocab_size = len(x_dict_embedding) + 1
-    best_model_embedding = train_embedding(train_df_embedding, vocab_size, num_epochs=16, verbose=True)
+    best_model_embedding = train_embedding(train_df_embedding, vocab_size, num_epochs=40, verbose=verbose)
     results_df_embedding = predict_test_embedding(best_model_embedding, test_df_embedding, y_dict_embedding)
     
     save_data(results_df_oh, results_df_embedding)
+    print("Successfully trained models, predicted new data and saved the results to CSV files.")
 
 if __name__ == "__main__":
     main()

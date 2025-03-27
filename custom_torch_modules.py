@@ -28,7 +28,6 @@ class SequenceDatasetEmbedding(Dataset):
         return len(self.y)
 
     def __getitem__(self, idx):
-        # Convert NumPy arrays to PyTorch tensors with float32
         X_tensor = torch.tensor(self.X[idx], dtype=torch.long)
         y_tensor = torch.tensor(self.y[idx], dtype=torch.long)
         return X_tensor, y_tensor
@@ -41,7 +40,6 @@ class CustomLayer(nn.Module):
         self.bias = nn.Parameter(torch.zeros(out_features))
             
     def forward(self, x):
-        # Manual implementation of linear transformation: y = xW^T + b
         output = torch.matmul(x, self.weight.t()) + self.bias
         return output
 
